@@ -31,7 +31,7 @@ cd OpenCV
 #### Run the file for the video live output on screen.
 
 
-## INSTALLATION
+## INSTALLATION PROCESS
 #### 1. Clone the github repository using:
 ```bash
 git clone https://github.com/pizzaparth/MxAiCombat.git
