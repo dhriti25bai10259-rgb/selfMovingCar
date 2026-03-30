@@ -7,7 +7,7 @@
 
 ## Overview
 
-MxAiCombat is a semantic segmentation system designed for off-road combat environments. It uses a fine-tuned **DINOv2-base (ViT-B/14)** backbone paired with a custom **Feature Pyramid Network (FPN) decoder** to classify every pixel in a camera frame into one of 10 terrain categories. The resulting segmentation maps are consumed by a downstream autonomous driving system built on an ESP32 microcontroller and OpenCV.
+The Car is a semantic segmentation system designed for off-road combat environments. It uses a fine-tuned **DINOv2-base (ViT-B/14)** backbone paired with a custom **Feature Pyramid Network (FPN) decoder** to classify every pixel in a camera frame into one of 10 terrain categories. The resulting segmentation maps are consumed by a downstream autonomous driving system built on an ESP32 microcontroller and OpenCV.
 
 **Core objective:** Achieve a mean Intersection-over-Union (mIoU) > 0.5 on the off-road segmentation dataset while fitting within 4 GB VRAM.
 
