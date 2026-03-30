@@ -1,4 +1,4 @@
-# MxAiCombat
+# Self MovingCar
 #### An AI powered pilot assistance module for Un-manned combat ground vehicle, that can detect obstacles and threats on the terrain, irrespective of visibility and weather conditions.
 ---
 ![carphoto](car.jpeg)
