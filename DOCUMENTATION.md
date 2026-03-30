@@ -5,7 +5,7 @@
 
 ---
 
-## 1. Project Overview
+## Overview
 
 MxAiCombat is a semantic segmentation system designed for off-road combat environments. It uses a fine-tuned **DINOv2-base (ViT-B/14)** backbone paired with a custom **Feature Pyramid Network (FPN) decoder** to classify every pixel in a camera frame into one of 10 terrain categories. The resulting segmentation maps are consumed by a downstream autonomous driving system built on an ESP32 microcontroller and OpenCV.
 
@@ -13,7 +13,7 @@ MxAiCombat is a semantic segmentation system designed for off-road combat enviro
 
 ---
 
-## 2. Repository Structure
+## Repository Structure
 
 ```
 REPOSITORY/
@@ -45,7 +45,7 @@ REPOSITORY/
 
 ---
 
-## 3. Hardware Requirements
+## Hardware Requirements
 
 | Component | Specification |
 |---|---|
@@ -59,7 +59,7 @@ The training scripts are designed to fit comfortably within 4 GB VRAM using Auto
 
 ---
 
-## 4. Installation & Environment Setup
+## Installation & Environment Setup
 
 ### Step 1 — Clone the repository
 
@@ -91,7 +91,7 @@ conda activate EDU
 
 ---
 
-## 5. Dataset Structure
+##  Dataset Structure
 
 The training and validation datasets must be arranged as follows:
 
@@ -115,7 +115,7 @@ The dataset directories are expected to live alongside the training/testing scri
 
 ---
 
-## 6. Segmentation Classes
+##  Segmentation Classes
 
 The model classifies every pixel into one of 10 terrain categories. Rare classes (marked ⚠️) receive boosted sampling during training and have higher class weights in the loss function.
 
@@ -134,19 +134,19 @@ The model classifies every pixel into one of 10 terrain categories. Rare classes
 
 ---
 
-## 7. Model Architecture
+##  Model Architecture
 
-### 7.1 Backbone — DINOv2-Base (ViT-B/14)
+### 1 Backbone — DINOv2-Base (ViT-B/14)
 
 The backbone is Meta's **DINOv2 ViT-Base/14** (`dinov2_vitb14`), a Vision Transformer that produces **768-dimensional patch embeddings** with a patch size of 14×14 pixels. It is loaded from `facebookresearch/dinov2` via `torch.hub`.
 
 **Partial fine-tuning strategy:** The backbone is initially fully frozen, then the last 4 transformer blocks (out of 12) and the final normalization layer are unfrozen. This adapts the backbone to the off-road domain without overwriting general visual features learned on ImageNet.
 
-### 7.2 Multi-Scale Feature Extractor — `DINOv2MultiScale`
+### 2 Multi-Scale Feature Extractor — `DINOv2MultiScale`
 
 Forward hooks are registered at four intermediate transformer blocks — at approximately 1/4, 1/2, 3/4, and the final depth of the backbone (blocks 2, 5, 8, and 11 for ViT-B/12). The CLS token is discarded; only the patch tokens `(B, N, 768)` are retained. This gives four feature maps at different abstraction levels, enabling the decoder to combine both fine-grained spatial detail and high-level semantic context.
 
-### 7.3 Decoder — FPN Segmentation Head (`FPNSegHead`)
+### 3 Decoder — FPN Segmentation Head (`FPNSegHead`)
 
 The decoder follows a Feature Pyramid Network design:
 
@@ -154,7 +154,7 @@ The decoder follows a Feature Pyramid Network design:
 2. **Top-down fusion** — Features are aggregated from finest (deepest) to coarsest (shallowest) using element-wise addition, with a **ConvNeXt-style refinement block** at each scale (depthwise 7×7 conv → BN → GELU → 1×1 expansion → 1×1 projection).
 3. **Classifier** — A small 3×3 conv + BN + GELU + 1×1 conv head maps the fused feature map to `n_classes` logits, which are then bilinearly upsampled to the full input resolution.
 
-### 7.4 Loss Function — `FocalDiceLoss`
+### 4 Loss Function — `FocalDiceLoss`
 
 Training uses a composite loss that addresses class imbalance at both the pixel and region levels:
 
@@ -165,7 +165,7 @@ Total loss = `FocalLoss + 0.5 × DiceLoss`
 
 ---
 
-## 8. Training Pipeline
+##  Training Pipeline
 
 ### Running Training
 
@@ -195,7 +195,7 @@ python train-21.py
 
 ---
 
-## 9. Testing & Evaluation Pipeline
+##  Testing & Evaluation Pipeline
 
 ### Running Evaluation
 
@@ -230,7 +230,7 @@ By default, TTA is enabled. Each image is evaluated twice — once normally, and
 
 ---
 
-## 10. Outputs & Artifacts
+##  Outputs & Artifacts
 
 ### Training Outputs (`scripts/training/train_stats/`)
 
@@ -252,7 +252,7 @@ By default, TTA is enabled. Each image is evaluated twice — once normally, and
 
 ---
 
-## 11. Autonomous System Integration
+##  Autonomous System Integration
 
 The segmentation model interfaces with the physical vehicle through two subsystems:
 
@@ -269,7 +269,7 @@ This streams the camera feed with the segmentation mask composited on top in rea
 
 ---
 
-## 12. Key Hyperparameters Reference
+## Key Hyperparameters Reference
 
 | Parameter | Value | Notes |
 |---|---|---|
@@ -291,7 +291,7 @@ This streams the camera feed with the segmentation mask composited on top in rea
 
 ---
 
-## 13. Troubleshooting
+## Troubleshooting
 
 **CUDA out of memory:** Reduce `batch_size` to 1 or increase `accum_steps` proportionally to maintain the effective batch size.
 
