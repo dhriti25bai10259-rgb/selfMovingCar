@@ -1,4 +1,4 @@
-# MxAiCombat — Technical Documentation
+# SelfMovingCar — Technical Documentation
 
 > **AI-powered pilot assistance module for Unmanned Combat Ground Vehicles (UCGV)**
 > Performs real-time terrain segmentation for obstacle and threat detection, regardless of visibility or weather conditions.
