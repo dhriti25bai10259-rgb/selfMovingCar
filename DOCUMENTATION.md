@@ -5,24 +5,6 @@
 
 ---
 
-## Table of Contents
-
-1. [Project Overview](#1-project-overview)
-2. [Repository Structure](#2-repository-structure)
-3. [Hardware Requirements](#3-hardware-requirements)
-4. [Installation & Environment Setup](#4-installation--environment-setup)
-5. [Dataset Structure](#5-dataset-structure)
-6. [Segmentation Classes](#6-segmentation-classes)
-7. [Model Architecture](#7-model-architecture)
-8. [Training Pipeline](#8-training-pipeline)
-9. [Testing & Evaluation Pipeline](#9-testing--evaluation-pipeline)
-10. [Outputs & Artifacts](#10-outputs--artifacts)
-11. [Autonomous System Integration](#11-autonomous-system-integration)
-12. [Key Hyperparameters Reference](#12-key-hyperparameters-reference)
-13. [Troubleshooting](#13-troubleshooting)
-
----
-
 ## 1. Project Overview
 
 MxAiCombat is a semantic segmentation system designed for off-road combat environments. It uses a fine-tuned **DINOv2-base (ViT-B/14)** backbone paired with a custom **Feature Pyramid Network (FPN) decoder** to classify every pixel in a camera frame into one of 10 terrain categories. The resulting segmentation maps are consumed by a downstream autonomous driving system built on an ESP32 microcontroller and OpenCV.
